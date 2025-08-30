@@ -1,0 +1,18 @@
+{
+  "name": "royers/valiphant",
+  "description": "A library for data validation using php attributes",
+  "type": "library",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Royers\\Valiphant\\": "src/",
+      "Royers\\Valiphant\\App\\": "public/"
+    }
+  },
+  "authors": [
+    {
+      "name": "RoY3rS04"
+    }
+  ],
+  "require": {}
+}
