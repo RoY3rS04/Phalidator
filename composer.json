@@ -1,12 +1,12 @@
 {
-  "name": "royers/valiphant",
+  "name": "royers/phalidator",
   "description": "A library for data validation using php attributes",
   "type": "library",
   "license": "MIT",
   "autoload": {
     "psr-4": {
-      "Royers\\Valiphant\\": "src/",
-      "Royers\\Valiphant\\App\\": "public/"
+      "Royers\\Phalidator\\": "src/",
+      "Royers\\Phalidator\\App\\": "public/"
     }
   },
   "authors": [
