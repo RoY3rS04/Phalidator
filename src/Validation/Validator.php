@@ -3,11 +3,19 @@
 namespace Royers\Phalidator\Validation;
 
 use ReflectionClass;
+use Royers\Phalidator\Helpers\Tuple;
 
 class Validator
 {
-    public static function validate(ReflectionClass $reflection, object $obj)
+    /**
+  * @return Tuple<bool, array>
+  */
+    public static function validate(object $obj): Tuple
     {
+        $errors = [];
+
+        $reflection = new ReflectionClass($obj);
+
         $classProps = $reflection->getProperties();
         $classAttrs = $reflection->getAttributes();
 
@@ -15,7 +23,6 @@ class Validator
             echo $attribute->getName() . PHP_EOL;
         }
 
-        echo "<pre>";
         foreach ($classProps as $prop) {
             $propVal = $prop->getValue($obj);
 
@@ -23,13 +30,19 @@ class Validator
                 $attributeInstance = $propAttribute->newInstance();
 
                 if (method_exists($attributeInstance, 'validate')) {
-                    $attributeInstance->validate($propVal) == false
-                        ? print "{$prop->getName()} failed to pass {$propAttribute->getName()} with value {$propVal}"
-                        : print "validation successfull";
+
+                    if (!$attributeInstance->validate($propVal)) {
+                        $errors[$prop->getName()] = [
+                            'ok' => false,
+                            'msg' => "Validation {$propAttribute} not passed for {$prop->getName()}"
+                        ];
+
+                        continue;
+                    }
                 }
             }
         }
-        echo "</pre>";
-    }
 
+        return new Tuple(count($errors) < 1, $errors);
+    }
 }

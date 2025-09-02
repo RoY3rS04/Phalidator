@@ -9,4 +9,12 @@ $name = $_GET['u_name'];
 
 $user = new User($name);
 
-Validator::validate(new ReflectionClass(User::class), $user);
+$tuple = Validator::validate($user);
+
+if (!$tuple->first) {
+    echo "<pre>";
+    var_dump($tuple->second);
+    echo "</pre>";
+} else {
+    echo "Validation successfull";
+}
